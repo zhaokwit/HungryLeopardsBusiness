@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hungryleopardsbusiness">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="com.android.hardware.camera" />
+    <uses-feature android:name="com.android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,16 +16,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">>
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OrderList"></activity>
-        <activity android:name=".OrderDetail"></activity>
-        <activity android:name=".QRscanner"></activity>
+        <activity android:name=".OrderList" />
+        <activity android:name=".OrderDetail" />
+        <activity android:name=".QRscanner" />
+        <activity android:name=".Confrom"/>
     </application>
 
 </manifest>
