@@ -1,5 +1,6 @@
 package com.example.hungryleopardsbusiness;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,11 +15,22 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout linearLayout, Scan;
     public static TextView textView;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     TextView toolbarTitle;
     ImageButton logo;
@@ -28,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isflash = false;
     boolean ison = false;
     private CameraManager manager;
+    public static ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +54,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            toolbarTitle.setText("Hungry Leopards - Busniess");
+        toolbarTitle.setText("Hungry Leopards - Busniess");
 
         linearLayout = findViewById(R.id.order);
         Scan = findViewById(R.id.scan);
         logo = findViewById(R.id.Logo);
+        arrayList = new ArrayList<>();
+
+        db.collection("OrdersNumBusiness").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            String orderNums = documentSnapshot.getId();
+                            arrayList.add(orderNums);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //textView = findViewById(R.id.result);
+
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
