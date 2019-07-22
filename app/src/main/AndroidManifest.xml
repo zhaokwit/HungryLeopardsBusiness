@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".OrderList" />
-        <activity android:name=".OrderDetail" />
+        <activity android:name=".OrderDetail"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".QRscanner" />
         <activity android:name=".Confrom"/>
     </application>

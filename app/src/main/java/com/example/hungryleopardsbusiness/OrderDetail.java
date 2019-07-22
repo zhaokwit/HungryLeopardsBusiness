@@ -2,18 +2,28 @@ package com.example.hungryleopardsbusiness;
 
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetail extends AppCompatActivity {
 
+    TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail);
+
+        //Tool bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        toolbarTitle.setText("Order Detail");
 
 
         List<OrderDetailInfo> list = new ArrayList<OrderDetailInfo>();
