@@ -20,11 +20,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     boolean ison = false;
     private CameraManager manager;
     public static ArrayList<String> arrayList;
+    public static ArrayList<String> arrayListItem;
+    public static ArrayList<String> arrayListOrderNum;
+    public static ArrayList<String> arrayListDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         Scan = findViewById(R.id.scan);
         logo = findViewById(R.id.Logo);
         arrayList = new ArrayList<>();
+        arrayListItem = new ArrayList<>();
+        arrayListOrderNum = new ArrayList<>();
+        arrayListDate = new ArrayList<>();
 
         db.collection("OrdersNumBusiness").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -69,6 +77,45 @@ public class MainActivity extends AppCompatActivity {
                             String orderNums = documentSnapshot.getId();
                             arrayList.add(orderNums);
                         }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        db.collection("OrdersNumBusiness").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            final String orderNums = documentSnapshot.getId();
+                            String userID = documentSnapshot.getString("User");
+                            final Date date = documentSnapshot.getTimestamp("Date").toDate();
+
+                            db.collection("users").document(userID).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            String userName=documentSnapshot.getString("Name");
+                                            String listText = "Order Numers: " + orderNums + "\n" + date.toString() + "\n" + userName;
+                                            arrayListItem.add(listText);
+                                            arrayListOrderNum.add(orderNums);
+                                            arrayListDate.add(date.toString());
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+
+                        }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override

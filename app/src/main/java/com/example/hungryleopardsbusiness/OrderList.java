@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,46 +23,25 @@ import java.util.List;
 public class OrderList  extends AppCompatActivity {
 
     Bundle bundle = new Bundle();
+    ListView listView;
+    ArrayAdapter<String> arrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_list);
 
-        ListView lists = findViewById(R.id.View);
+        listView = findViewById(R.id.orderlist);
+        arrayAdapter = new ArrayAdapter<String>(OrderList.this,android.R.layout.simple_list_item_activated_1,MainActivity.arrayListItem);
+        listView.setAdapter(arrayAdapter);
 
-
-
-        final List<OrderInfo> list = new ArrayList<OrderInfo>();
-        OrderInfo item1 = new OrderInfo();
-        item1.OrderNumber = "Order number 1";
-        item1.Name = "David";
-        item1.Date = "10/03/2020";
-        list.add(item1);
-
-        OrderInfo item2 = new OrderInfo();
-        item2.OrderNumber = "Order number 2";
-        item2.Name = "Jack";
-        item2.Date = "10/03/2021";
-        list.add(item2);
-
-        OrderInfo item3 = new OrderInfo();
-        item3.OrderNumber = "Order number 3";
-        item3.Name = "Rax";
-        item3.Date = "10/03/2022";
-        list.add(item3);
-
-
-        OrderAdapter adapter;
-        adapter = new OrderAdapter(this, 0,list);
-
-        ListView listView = (ListView)findViewById(R.id.View);
-        listView.setAdapter(adapter);
-
-
-        lists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(OrderList.this, OrderDetail.class);
+                String orderNum = MainActivity.arrayListOrderNum.get(position);
+                String orderDate = MainActivity.arrayListDate.get(position);
+                intent.putExtra("OrderNum", orderNum);
+                intent.putExtra("OrderDate", orderDate);
 
                 startActivity(intent);
 
