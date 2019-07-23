@@ -13,10 +13,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -40,11 +42,14 @@ public class QRscanner extends AppCompatActivity implements ZXingScannerView.Res
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ScannerView = new ZXingScannerView(this);
         setContentView(ScannerView);
+
+
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {

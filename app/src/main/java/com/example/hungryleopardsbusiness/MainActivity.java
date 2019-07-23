@@ -56,14 +56,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
-
-
-
         toolbarTitle.setText("Hungry Leopards - Busniess");
 
         linearLayout = findViewById(R.id.order);
         Scan = findViewById(R.id.scan);
-        logo = findViewById(R.id.Logo);
         arrayList = new ArrayList<>();
         arrayListItem = new ArrayList<>();
         arrayListOrderNum = new ArrayList<>();

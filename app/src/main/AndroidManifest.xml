@@ -24,11 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OrderList" />
+        <activity android:name=".OrderList"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".OrderDetail"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".QRscanner" />
-        <activity android:name=".Confrom"/>
+        <activity android:name=".QRscanner"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Confrom"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

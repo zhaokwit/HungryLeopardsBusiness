@@ -98,15 +98,9 @@
                 android:textStyle="bold|italic"
                 android:textColor="@android:color/black"/>
         </LinearLayout>
-        <!--<TextView-->
-            <!--android:id="@+id/result"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Hello"-->
-            <!--android:textSize="20dp"-->
-            <!--android:layout_gravity="center"/>-->
 
-        <ImageButton
+
+        <ImageView
             android:id="@+id/Logo"
             android:layout_width="250dp"
             android:layout_height="200dp"

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,18 @@ public class OrderList  extends AppCompatActivity {
 
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
+    TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_list);
+
+        //Tool bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        toolbarTitle.setText("Orders");
 
         listView = findViewById(R.id.orderlist);
         arrayAdapter = new ArrayAdapter<String>(OrderList.this,android.R.layout.simple_list_item_activated_1,MainActivity.arrayListItem);
