@@ -20,10 +20,9 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/toolbar_title"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAlignment="center"
+                android:layout_marginLeft="115dp"
                 android:text=""
                 android:textColor="@color/black"
                 android:textStyle="bold"/>

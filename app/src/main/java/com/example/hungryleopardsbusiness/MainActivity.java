@@ -70,25 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
         final String s = "Ready to Pick up!";
 
-        db.collection("OrdersNum").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
-                            String status = documentSnapshot.getString("Status");
-                            if(status.equals(s)) {
-                                arrayListCheck.add("1");
-                            }
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         db.collection("OrdersNumBusiness").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -126,6 +107,23 @@ public class MainActivity extends AppCompatActivity {
                                             arrayListDate.add(date.toString());
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            db.collection("OrdersNum").document(orderNums).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String status = documentSnapshot.getString("Status");
+                                    if(status.equals(s)){
+                                        arrayListCheck.add("1");
+                                    }else {
+                                        arrayListCheck.add("0");
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();

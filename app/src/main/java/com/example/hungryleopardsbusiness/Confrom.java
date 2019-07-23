@@ -56,7 +56,7 @@ public class Confrom extends AppCompatActivity {
 
             for (int i = 0; i < MainActivity.arrayList.size(); i++) {
                 if (QRscanner.result1.equals(MainActivity.arrayList.get(i))){
-                   if(MainActivity.arrayListCheck.get(i).equals("1")) {
+                   if((MainActivity.arrayListCheck.get(i)).equals("1")) {
                        resultText.setText("Order# " + MainActivity.arrayList.get(i) + "\n" + " Pick Up Successful");
                        manager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
                        cameraId = manager.getCameraIdList()[0];
