@@ -9,9 +9,13 @@ import android.content.Intent;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class Confrom extends AppCompatActivity {
@@ -22,6 +26,9 @@ public class Confrom extends AppCompatActivity {
     TextView toolbarTitle;
 
     ImageButton backToHome;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    public static int index = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,9 @@ public class Confrom extends AppCompatActivity {
                     manager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
                     cameraId = manager.getCameraIdList()[0];
                     manager.setTorchMode(cameraId, true);
+                    db.collection("OrdersNumBusiness").document(MainActivity.arrayList.get(i)).delete();
+                    DocumentReference statusRef = db.collection("OrdersNum").document(MainActivity.arrayList.get(i));
+                    statusRef.update("Status", "Order has been picked!");
                     break;
                 }
                 else{
@@ -58,10 +68,11 @@ public class Confrom extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-                    break;
+
                 }
 
             }
+
         } catch (CameraAccessException e){
             e.printStackTrace();
         }
@@ -79,6 +90,8 @@ public class Confrom extends AppCompatActivity {
                     manager = null;
                 } catch (Exception e) {
                 }
+
+
             }
         });
     }
