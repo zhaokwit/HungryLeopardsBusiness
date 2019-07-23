@@ -13,9 +13,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 
 public class Confrom extends AppCompatActivity {
@@ -45,17 +51,22 @@ public class Confrom extends AppCompatActivity {
         resultText = findViewById(R.id.result);
         backToHome = findViewById(R.id.goHome);
 
+
         try {
 
             for (int i = 0; i < MainActivity.arrayList.size(); i++) {
                 if (QRscanner.result1.equals(MainActivity.arrayList.get(i))){
-                    resultText.setText("Order# " + MainActivity.arrayList.get(i) + "\n" + " Pick Up Successful");
-                    manager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
-                    cameraId = manager.getCameraIdList()[0];
-                    manager.setTorchMode(cameraId, true);
-                    db.collection("OrdersNumBusiness").document(MainActivity.arrayList.get(i)).delete();
-                    DocumentReference statusRef = db.collection("OrdersNum").document(MainActivity.arrayList.get(i));
-                    statusRef.update("Status", "Order has been picked!");
+                   if(MainActivity.arrayListCheck.get(i).equals("1")) {
+                       resultText.setText("Order# " + MainActivity.arrayList.get(i) + "\n" + " Pick Up Successful");
+                       manager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
+                       cameraId = manager.getCameraIdList()[0];
+                       manager.setTorchMode(cameraId, true);
+                       db.collection("OrdersNumBusiness").document(MainActivity.arrayList.get(i)).delete();
+                       DocumentReference statusRef = db.collection("OrdersNum").document(MainActivity.arrayList.get(i));
+                       statusRef.update("Status", "Order has been picked!");
+                   }else {
+                       resultText.setText("Your order is not ready");
+                   }
                     break;
                 }
                 else{

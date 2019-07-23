@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> arrayListItem;
     public static ArrayList<String> arrayListOrderNum;
     public static ArrayList<String> arrayListDate;
+    public static ArrayList<String> arrayListCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,28 @@ public class MainActivity extends AppCompatActivity {
         arrayListItem = new ArrayList<>();
         arrayListOrderNum = new ArrayList<>();
         arrayListDate = new ArrayList<>();
+        arrayListCheck = new ArrayList<>();
+
+        final String s = "Ready to Pick up!";
+
+        db.collection("OrdersNum").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot documentSnapshot: queryDocumentSnapshots){
+                            String status = documentSnapshot.getString("Status");
+                            if(status.equals(s)) {
+                                arrayListCheck.add("1");
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Problem", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         db.collection("OrdersNumBusiness").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
