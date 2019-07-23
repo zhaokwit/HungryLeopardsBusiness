@@ -22,7 +22,6 @@ import java.util.List;
 
 public class OrderList  extends AppCompatActivity {
 
-    Bundle bundle = new Bundle();
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
     @Override
